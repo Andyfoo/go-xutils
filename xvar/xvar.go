@@ -150,6 +150,19 @@ func ObjArrToStrArr(objArr []interface{}) []string {
 	return arr
 }
 
+func IntToStr(v int) string {
+	return strconv.Itoa(v)
+}
+func Int64ToStr(v int64) string {
+	return strconv.FormatInt(int64(v), 10)
+}
+func FloatToStr(v float32) string {
+	return strconv.Itoa(v)
+}
+func Float64ToStr(v float64) string {
+	return strconv.FormatInt(int64(v), 10)
+}
+
 //string转int
 func IntVal(s string, _def ...int) int {
 	var def int
