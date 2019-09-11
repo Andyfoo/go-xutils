@@ -35,3 +35,17 @@ func TestToStr(t *testing.T) {
 	res_type := reflect.TypeOf(str)
 	fmt.Println(res_type) //string
 }
+
+func TestIsEmpty(t *testing.T) {
+	fmt.Println("IsEmpty", IsEmpty("a"))
+	fmt.Println("IsEmpty", IsEmpty(""))
+	fmt.Println("IsNotEmpty", IsNotEmpty("a"))
+	fmt.Println("IsNotEmpty", IsNotEmpty(""))
+	fmt.Println("IsBlank", IsBlank("a a"))
+	fmt.Println("IsBlank", IsBlank("   "))
+	fmt.Println("IsNotBlank", IsNotBlank("a a"))
+	fmt.Println("IsNotBlank", IsNotBlank("   "))
+	fmt.Println("ContainsOnlyWhitespaces", ContainsOnlyWhitespaces("   "))
+	fmt.Println("IsAllEmpty", IsAllEmpty("", ""))
+
+}

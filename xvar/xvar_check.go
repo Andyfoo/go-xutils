@@ -62,3 +62,37 @@ func RegMatch(str string, reg string) bool {
 	}
 	return r.MatchString(str)
 }
+
+func IsEmpty(str string) bool {
+	return len(str) == 0
+}
+func IsNotEmpty(str string) bool {
+	return len(str) > 0
+}
+func IsAllEmpty(strs ...string) bool {
+	for _, v := range strs {
+		if !IsEmpty(v) {
+			return false
+		}
+	}
+	return true
+}
+func IsBlank(str string) bool {
+	return len(str) == 0 || ContainsOnlyWhitespaces(str)
+}
+func IsNotBlank(str string) bool {
+	return len(str) > 0 && !ContainsOnlyWhitespaces(str)
+}
+func ContainsOnlyWhitespaces(str string) bool {
+	strBytes := []byte(str)
+	for _, v := range strBytes {
+		if !IsWhitespace(v) {
+			return false
+		}
+	}
+	return true
+}
+
+func IsWhitespace(c byte) bool {
+	return c <= ' '
+}
