@@ -156,11 +156,11 @@ func IntToStr(v int) string {
 func Int64ToStr(v int64) string {
 	return strconv.FormatInt(int64(v), 10)
 }
-func FloatToStr(v float32) string {
-	return strconv.Itoa(v)
+func FloatToStr(v float64) string {
+	return strconv.FormatFloat(v, 'f', -1, 64)
 }
 func Float64ToStr(v float64) string {
-	return strconv.FormatInt(int64(v), 10)
+	return strconv.FormatFloat(v, 'f', -1, 64)
 }
 
 //string转int

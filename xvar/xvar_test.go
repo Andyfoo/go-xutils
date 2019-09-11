@@ -34,6 +34,11 @@ func TestToStr(t *testing.T) {
 	str := []string{"wd"}
 	res_type := reflect.TypeOf(str)
 	fmt.Println(res_type) //string
+
+	fmt.Println("IntToStr", IntToStr(32))
+	fmt.Println("Int64ToStr", Int64ToStr(int64(33)))
+	fmt.Println("FloatToStr", FloatToStr(32.2))
+	fmt.Println("Float64ToStr", Float64ToStr(float64(64.32)))
 }
 
 func TestIsEmpty(t *testing.T) {
