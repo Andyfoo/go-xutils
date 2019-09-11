@@ -1,4 +1,4 @@
-package xwinrar
+package x7zip
 
 import (
 	"fmt"
