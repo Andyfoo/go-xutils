@@ -12,13 +12,13 @@ func Test1(t *testing.T) {
 	fmt.Println("task")
 	//var mylist = []string{}
 	t1 := NewThread()
-	t1.addTaskFuns(func() interface{} {
+	t1.AddTaskFuns(func() interface{} {
 		return "data1"
 	})
-	t1.addTaskFuns(func() interface{} {
+	t1.AddTaskFuns(func() interface{} {
 		return "data2"
 	})
-	t1.addTaskChanFuns(func(ch1 chan interface{}) {
+	t1.AddTaskChanFuns(func(ch1 chan interface{}) {
 		for i := 0; i < 2; i++ {
 			ch1 <- xvar.Int64ToStr(time.Now().UnixNano())
 		}

@@ -33,10 +33,10 @@ func NewThread() Thread {
 	return Thread{}
 }
 
-func (t *Thread) addTaskFuns(fun TaskFun) {
+func (t *Thread) AddTaskFuns(fun TaskFun) {
 	t.taskFuns = append(t.taskFuns, fun)
 }
-func (t *Thread) addTaskChanFuns(fun TaskChanFun) {
+func (t *Thread) AddTaskChanFuns(fun TaskChanFun) {
 	t.taskChanFuns = append(t.taskChanFuns, fun)
 }
 func (t *Thread) Start(taskCallback TaskFinishFun, allFinishCallback AllFinishFun) {
