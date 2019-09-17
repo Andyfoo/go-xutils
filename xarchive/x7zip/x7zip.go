@@ -35,7 +35,7 @@ import (
 )
 
 var (
-	WinRarBinPath = "7z.exe"
+	BinPath = "bin/7z.exe"
 )
 
 func Clear(path string) {
@@ -47,12 +47,12 @@ func Clear(path string) {
 }
 
 func UnRar(extName string, data []byte, objPath string) []string {
-	if len(WinRarBinPath) == 0 {
-		xlog.Error("WinRarBinPath is null")
+	if len(BinPath) == 0 {
+		xlog.Error("BinPath is null")
 		return nil
 	}
-	if !xfile.FileIsExist(WinRarBinPath) {
-		xlog.Error("WinRarBinPath is not exists")
+	if !xfile.FileIsExist(BinPath) {
+		xlog.Error("BinPath is not exists")
 		return nil
 	}
 	objPath = fmt.Sprintf("%s/%s/", objPath, xtime.Now().PFormat("YmdHis"))
@@ -72,7 +72,7 @@ func UnRar(extName string, data []byte, objPath string) []string {
 		return nil
 	}
 
-	cmd := exec.Command(xfile.FormatPathSys(WinRarBinPath), "e", xfile.FormatPathSys(objFile), fmt.Sprintf("-o%s", xfile.FormatPathSys(objPath+"/data")), "-aoa")
+	cmd := exec.Command(xfile.FormatPathSys(BinPath), "e", xfile.FormatPathSys(objFile), fmt.Sprintf("-o%s", xfile.FormatPathSys(objPath+"/data")), "-aoa")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	out, err := cmd.Output()
 	if err != nil {
