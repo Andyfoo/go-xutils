@@ -7,13 +7,14 @@ import (
 )
 
 func TestHttp(t *testing.T) {
-	testHttpGet()
+	//testHttpGet()
 	//testHttpPostStream()
 	//testHttpPut()
 	//testHttpPost()
 	//testGetBytes()
 	//testDownFile()
 	//testHttpHead()
+	testHttpPostMap()
 }
 
 func testHttpGet() {
@@ -64,6 +65,14 @@ func testHttpPost() {
 	var data = url.Values{}
 	data.Set("aaaa", "1234")
 	var a = hUtil.Post("https://getman.cn/echo", data)
+
+	fmt.Println(a)
+}
+func testHttpPostMap() {
+	hUtil := NewDefaultHttpUtil()
+	var data = make(map[string]string)
+	data["aaa"] = "weew"
+	var a = hUtil.PostMap("https://getman.cn/echo", data)
 
 	fmt.Println(a)
 }

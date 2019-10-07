@@ -8,7 +8,7 @@ import (
 	"github.com/Andyfoo/go-xutils/xvar"
 )
 
-func Test1(t *testing.T) {
+func _Test1(t *testing.T) {
 	fmt.Println("task")
 	//var mylist = []string{}
 	t1 := NewThread()
@@ -31,6 +31,29 @@ func Test1(t *testing.T) {
 	// }, func() {
 	// 	fmt.Println("finish 1")
 	// })
+	fmt.Println("finish")
+	time.Sleep(100 * time.Microsecond)
+}
+func Test2(t *testing.T) {
+	fmt.Println("task")
+	//var mylist = []string{}
+	t1 := NewThread()
+	for i := 0; i < 10; i++ {
+
+		func(i2 int) {
+			t1.AddTaskChanFuns(func(ch1 chan interface{}) {
+				fmt.Println(i2)
+				for i := 0; i < 2; i++ {
+					ch1 <- xvar.Int64ToStr(time.Now().UnixNano())
+				}
+			})
+		}(i)
+	}
+
+	t1.StartSync(func(data interface{}) {
+		//fmt.Println(data)
+	})
+
 	fmt.Println("finish")
 	time.Sleep(100 * time.Microsecond)
 }

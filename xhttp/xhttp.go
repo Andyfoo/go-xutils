@@ -212,7 +212,17 @@ func (hUtil *HttpUtil) Get(urlStr string, _reqParm ...ReqParm) string {
 	}
 	return string(data)
 }
-
+func (hUtil *HttpUtil) PostMap(urlStr string, postDataMap map[string]string, _reqParm ...ReqParm) string {
+	var reqParm ReqParm
+	if len(_reqParm) > 0 {
+		reqParm = _reqParm[0]
+	}
+	postData := url.Values{}
+	for k, v := range postDataMap {
+		postData.Set(k, v)
+	}
+	return hUtil.Post(urlStr, postData, reqParm)
+}
 func (hUtil *HttpUtil) Post(urlStr string, postData url.Values, _reqParm ...ReqParm) string {
 	xlog.Info(fmt.Sprintf("post %s", urlStr))
 	client := &http.Client{Transport: hUtil.GetTransport()}

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"reflect"
+	"regexp"
 	"runtime"
 	"strings"
 	"sync"
@@ -114,15 +114,56 @@ func moduleOf(file string) string {
 			return file[pos1+5 : pos]
 		}
 	}
-	type em struct{}
-	file = reflect.TypeOf(em{}).PkgPath()
-	pos = strings.Index(file, "/")
-	if pos != -1 {
-		return file[0:pos]
+	return getCaller()
+	// type em struct{}
+	// file = reflect.TypeOf(em{}).PkgPath()
+	// pos = strings.Index(file, "/")
+	// if pos != -1 {
+	// 	return file[0:pos]
+	// }
+	// return "UNKNOWN_MOD"
+}
+func getCaller() string {
+	for i := 0; i < 10; i++ {
+		pc, file, _, _ := runtime.Caller(i)
+		if !strings.Contains(file, "xlog/xlog.go") {
+			// str := getMatchStr(file, `([\w\-_.]+\.[\w\-_.]+[\w\-_/]+)@`)
+			// if len(str) > 0 {
+			// 	return str
+			// }
+
+			return runtime.FuncForPC(pc).Name()
+		}
 	}
 	return "UNKNOWN_MOD"
 }
+func getMatchStr(str, regex string) string {
+	arr := getMatchArray(str, regex)
+	if arr == nil || len(arr) == 0 {
+		return ""
+	}
+	return arr[0]
+}
 
+func getMatchArray(str, regex string) []string {
+	reg, err := regexp.Compile(regex)
+	if err != nil {
+		Error(err)
+		return nil
+	}
+	arr := reg.FindStringSubmatch(str)
+	if arr == nil || len(arr) == 0 {
+		return nil
+	}
+	resultArr := make([]string, 0)
+	for k, v := range arr {
+		if k == 0 {
+			continue
+		}
+		resultArr = append(resultArr, v)
+	}
+	return resultArr
+}
 func (l *Logger) formatHeader(buf *bytes.Buffer, t time.Time, file string, line int, lvl int, reqId string) {
 	if l.prefix != "" {
 		buf.WriteString(l.prefix)
