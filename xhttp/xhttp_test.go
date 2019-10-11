@@ -4,9 +4,18 @@ import (
 	"fmt"
 	"net/url"
 	"testing"
+
+	"github.com/Andyfoo/go-xutils/xlog"
 )
 
+/*
+https://getman.cn
+https://httpbin.org
+*/
+
 func TestHttp(t *testing.T) {
+
+	xlog.Infof("test %s", "123")
 	//testHttpGet()
 	//testHttpPostStream()
 	//testHttpPut()
