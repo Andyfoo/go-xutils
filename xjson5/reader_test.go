@@ -1,4 +1,4 @@
-package json5
+package xjson5
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 
 func TestReaderValid(t *testing.T) {
 
-	tcases := []struct{
+	tcases := []struct {
 		In, Out string
 	}{
 		{
@@ -196,7 +196,7 @@ No \\n's!",
 	}
 
 	for i, tc := range tcases {
-		t.Run(strconv.Itoa(i), func (t *testing.T) {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			var expected, actual interface{}
 			json.Unmarshal([]byte(tc.Out), &expected)
 			err := Unmarshal([]byte(tc.In), &actual)

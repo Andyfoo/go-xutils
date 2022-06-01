@@ -1,4 +1,4 @@
-package json5
+package xjson5
 
 import (
 	"bytes"

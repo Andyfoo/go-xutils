@@ -1,4 +1,4 @@
-package json5
+package xjson5
 
 import (
 	"bufio"
@@ -51,10 +51,10 @@ func NewReader(rd io.Reader) *Reader {
 		scanner = bufio.NewReader(rd)
 	}
 	return &Reader{
-		rd:      scanner,
-		state:   (*Reader).lex,
-		line:    1,
-		tokens:  make(chan token, 3),
+		rd:     scanner,
+		state:  (*Reader).lex,
+		line:   1,
+		tokens: make(chan token, 3),
 	}
 }
 
@@ -131,7 +131,7 @@ func (r *Reader) pop() (rune, error) {
 		r.line++
 		r.lastcol, r.col = r.col, 0
 	} else {
-		r.lastcol, r.col = r.col, r.col + 1
+		r.lastcol, r.col = r.col, r.col+1
 	}
 	return next, nil
 }
