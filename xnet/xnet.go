@@ -1,5 +1,5 @@
 // Copyright 2019 Andyfoo
-//
+// [http://andyfoo.com][http://pslib.com]
 // Licensed under the Apache License, Version 2.0 (the "License"): you may
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at
@@ -24,7 +24,7 @@ import (
 )
 
 //获取本机IP
-func GetLocIP() string {
+func LocIP() string {
 	netInterfaces, err := net.Interfaces()
 	if err != nil {
 		//fmt.Println("net.Interfaces failed, err:", err.Error())
@@ -47,11 +47,26 @@ func GetLocIP() string {
 
 	return ""
 }
-func GetInternetIP() string {
+
+//获取当前机器互联网外网IP
+func WanIP() string {
+	//https://www.my-ip.io/api
+	//https://api.my-ip.io/ip		IPv4, IPv6
+	//https://api4.my-ip.io/ip		IPv4
+	//https://api6.my-ip.io/ip		IPv6
+
+	//https://ip-api.com/
+
+	//https://seeip.org/
+	//https://ip.seeip.org/   	IPv4 or IPv6
+	//https://ip4.seeip.org/	IPv4
+	//https://ip6.seeip.org		IPv6
+
+	//https://ip.tool.lu/
 	//http://ifconfig.me/ip
 	//http://ipinfo.io/ip
 	//https://ifconfig.co/ip
-	resp, err := http.Get("https://ifconfig.co/ip")
+	resp, err := http.Get("https://ip4.seeip.org/")
 	if err != nil {
 		return ""
 	}
@@ -64,7 +79,7 @@ func GetInternetIP() string {
 }
 
 //判断是否是公网ip
-func IsInternetIP(ip string) bool {
+func IsWanIP(ip string) bool {
 	IPAddr, err := net.ResolveIPAddr("ip", ip)
 	if err != nil {
 		return false
@@ -90,7 +105,7 @@ func IsInternetIP(ip string) bool {
 }
 
 //ip地址string转int
-func IP_str2int(ipnr string) int64 {
+func Ip2int(ipnr string) int64 {
 	bits := strings.Split(ipnr, ".")
 
 	b0, _ := strconv.Atoi(bits[0])
@@ -109,7 +124,7 @@ func IP_str2int(ipnr string) int64 {
 }
 
 //ip地址int转string
-func IP_int2str(ipnr int64) string {
+func Int2ip(ipnr int64) string {
 	var bytes [4]byte
 	bytes[0] = byte(ipnr & 0xFF)
 	bytes[1] = byte((ipnr >> 8) & 0xFF)
@@ -120,21 +135,17 @@ func IP_int2str(ipnr int64) string {
 }
 
 //判断ip地址区间
-func IpBetween(from net.IP, to net.IP, test net.IP) bool {
-	if from == nil || to == nil || test == nil {
-		//fmt.Println("An ip input is nil") // or return an error!?
-		return false
-	}
+func IpBetween(fromIp string, toIp string, testIp string) bool {
+	fromInt := Ip2int(fromIp)
+	toInt := Ip2int(toIp)
+	testInt := Ip2int(testIp)
 
-	from16 := from.To16()
-	to16 := to.To16()
-	test16 := test.To16()
-	if from16 == nil || to16 == nil || test16 == nil {
+	if fromInt == 0 || toInt == 0 || testInt == 0 {
 		//fmt.Println("An ip did not convert to a 16 byte") // or return an error!?
 		return false
 	}
 
-	if bytes.Compare(test16, from16) >= 0 && bytes.Compare(test16, to16) <= 0 {
+	if testInt >= fromInt && testInt <= toInt {
 		return true
 	}
 	return false
